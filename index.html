@@ -13,12 +13,21 @@
         arjs="sourceType: webcam; debugUIEnabled: false;"
         vr-mode-ui="enabled: false"
     >
+        <!-- ТЕСТОВЫЙ КУБ -->
+        <a-box
+            position="0 0 -2"
+            rotation="0 45 0"
+            color="#FF0000"
+            scale="0.3 0.3 0.3"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        </a-box>
+
         <a-entity
             gltf-model="./scene.glb"
-            scale="0.01 0.01 0.01"
-            position="0 0 -5"
+            scale="0.001 0.001 0.001"
+            position="0 -0.5 -2"
             rotation="0 0 0"
-            animation="property: rotation; to: 0 360 0; loop: true; dur: 10000; easing: linear"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 8000; easing: linear"
         ></a-entity>
 
         <a-entity camera></a-entity>
