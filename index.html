@@ -1,65 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AR Experience</title>
-  <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
-  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-
-  <!-- Компонент, который навешивает текстуру на GLB после загрузки -->
-  <script>
-    AFRAME.registerComponent('apply-glb-texture', {
-      schema: {
-        src: {type: 'selector'} // <img id="tex">
-      },
-      init: function () {
-        const el = this.el;
-        const imgEl = this.data.src;
-
-        el.addEventListener('model-loaded', () => {
-          const mesh = el.getObject3D('mesh');
-          if (!mesh || !imgEl) return;
-
-          const url = imgEl.getAttribute('src');
-          const loader = new THREE.TextureLoader();
-          const texture = loader.load(url);
-          texture.flipY = false; // для glTF, чтобы не переворачивало картинку
-
-          mesh.traverse(node => {
-            if (node.isMesh && node.material) {
-              node.material.map = texture;
-              node.material.needsUpdate = true;
-            }
-          });
-        });
-      }
-    });
-  </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AR Experience</title>
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 </head>
 <body style="margin: 0; overflow: hidden;">
+    <a-scene
+        embedded
+        arjs="sourceType: webcam; debugUIEnabled: false;"
+        vr-mode-ui="enabled: false"
+    >
+        <a-entity
+            gltf-model="./texture.glb"
+            scale="0.01 0.01 0.01"
+            position="0 -0.5 -2"
+            rotation="0 0 0"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 8000; easing: linear"
+        ></a-entity>
 
-  <a-scene
-  embedded
-  arjs="sourceType: webcam; debugUIEnabled: false;"
-  vr-mode-ui="enabled: false"
->
-  <a-assets>
-    <a-asset-item id="modelMain" src="./highres.glb"></a-asset-item>
-    <a-asset-item id="modelTex"  src="./texture.glb"></a-asset-item>
-  </a-assets>
-
-  <!-- Родитель: управляет общим масштабом/позицией -->
-  <a-entity id="root" scale="0.001 0.001 0.001" position="0 0 -0.5" rotation="-60 0 0" animation="property: rotation; to: -90 360 0; loop: true; dur: 8000; easing: linear">
-    <!-- Первая модель -->
-    <a-entity gltf-model="#modelMain" position="0 0 0"></a-entity>
-
-    <!-- Вторая модель (“текстурой”) -->
-    <a-entity gltf-model="#modelTex" position="0 0 0"></a-entity>
-  </a-entity>
-
-  <a-entity camera></a-entity>
-</a-scene>
-
+        <a-entity camera></a-entity>
+    </a-scene>
 </body>
 </html>
