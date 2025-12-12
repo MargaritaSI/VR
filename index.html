@@ -1,24 +1,53 @@
-<a-scene
-    embedded
-    arjs="sourceType: webcam; debugUIEnabled: false;"
-    vr-mode-ui="enabled: false"
->
-    <!-- ТЕСТОВЫЙ КУБ -->
-    <a-box
-        position="0 0 -2"
-        rotation="0 45 0"
-        color="#FF0000"
-        scale="0.3 0.3 0.3"
-        animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
-    </a-box>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AR Test</title>
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <style>
+        #loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            color: white;
+            background: rgba(0,0,0,0.7);
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body style="margin: 0; overflow: hidden;">
+    <div id="loading">🔄 Загрузка AR...</div>
 
-    <!-- ТВОЯ МОДЕЛЬ -->
-    <a-entity
-        gltf-model="./texture.glb"
-        scale="0.1 0.1 0.1"
-        position="0 -0.5 -2"
-        animation="property: rotation; to: 0 360 0; loop: true; dur: 8000">
-    </a-entity>
+    <a-scene
+        embedded
+        arjs="sourceType: webcam; debugUIEnabled: false;"
+        vr-mode-ui="enabled: false"
+    >
+        <!-- Большой яркий куб для теста -->
+        <a-box
+            position="0 0 -2"
+            rotation="0 45 0"
+            color="#00FF00"
+            width="2"
+            height="2"
+            depth="2"
+            animation="property: rotation; to: 0 405 0; loop: true; dur: 3000">
+        </a-box>
 
-    <a-entity camera></a-entity>
-</a-scene>
+        <a-entity camera></a-entity>
+    </a-scene>
+
+    <script>
+        // Скрыть индикатор когда AR загрузится
+        document.querySelector('a-scene').addEventListener('loaded', function() {
+            document.getElementById('loading').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
